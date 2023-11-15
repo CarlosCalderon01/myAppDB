@@ -6,18 +6,19 @@
 
 -- TABLA DE PAISES
 CREATE TABLE GmtCountry (
-    id SERIAL PRIMARY KEY,
-    name TEXT NOT NULL,
-    alfa2 CHAR(2),
-    alfa3 CHAR(3),
-    phone VARCHAR(6),
-    num VARCHAR(6)
+    id serial PRIMARY KEY,
+    name text NOT NULL,
+    alfa2 character(2),
+    alfa3 character(3),
+    phone text,
+    num text
 );
+
 
 -- TABLA DE ESTADOS
 CREATE TABLE GmtState (
     id SERIAL PRIMARY KEY,
-    GmtCountryid SMALLINT NOT NULL,
+    gmtcountry_id SERIAL NOT NULL,
     name TEXT NOT NULL,
     FOREIGN KEY (GmtCountryid) REFERENCES GmtCountry(id)
 );
@@ -25,9 +26,9 @@ CREATE TABLE GmtState (
 -- TABLA DE CIUDAD
 CREATE TABLE GmtCity (
     id SERIAL PRIMARY KEY,
-    GmtStateid SMALLINT NOT NULL,
+    gmtstate_id SMALLINT NOT NULL,
     name TEXT NOT NULL,
-    FOREIGN KEY (GmtStateid) REFERENCES GmtState(id)
+    FOREIGN KEY (gmtstate_id) REFERENCES GmtState(id)
 );
 
 -- TABLA DE BARRIOS
@@ -42,8 +43,21 @@ CREATE TABLE GmtNeighborhood (
 CREATE TABLE GmtLanguage (
     id SERIAL PRIMARY KEY,
     name TEXT NOT NULL,
-    iso6391 CHAR(2),
-    iso6392 CHAR(3)
+    alfa2 CHAR(2)
+);
+
+-- TABLA DE GmtGenderV01
+CREATE TABLE GmtGenderV01 (
+    id BOOLEAN PRIMARY KEY,
+    name VARCHAR(10),
+    idchar CHAR(1)
+);
+
+-- TABLA DE GmtGenderVX
+CREATE TABLE GmtGenderVX (
+    id SERIAL PRIMARY KEY,
+    name TEXT NOT NULL UNIQUE,
+    idchar CHAR(1)
 );
 
 /*
@@ -54,20 +68,37 @@ CREATE TABLE GmtLanguage (
 
 /*
     // ----- // ----- // ----- // ----- // ----- // ----- //
-    SCRIPT FOR INSERT QUERY
+    EXAMPLE SCRIPT FOR QUERY
     // ----- // ----- // ----- // ----- // ----- // ----- //
 */
 
-INSERT INTO public.gmtcountry(
-	id, name, alfa2, alfa3, phone, num)
-	VALUES (?, ?, ?, ?, ?, ?);
-
-INSERT INTO public.gmtstate(
-	id, gmtcountryid, name)
-	VALUES (?, ?, ?);
+SELECT * FROM public.gmtlanguage;
+INSERT INTO public.gmtlanguage (id, name, iso6391, iso6392) VALUES (?, ?, ?, ?);
 
 /*
     // ----- // ----- // ----- // ----- // ----- // ----- //
-    SCRIPT FOR INSERT QUERY
+    EXAMPLE SCRIPT FOR QUERY
     // ----- // ----- // ----- // ----- // ----- // ----- //
 */
+
+-- Task Table 1
+CREATE TABLE TextingTask1 (
+    serialid1 SERIAL,
+    text1 TEXT,
+    character1 character(10),
+    char1 CHAR(1),
+    money1 MONEY,
+    date1 DATE,
+    timestamp1 timestamp
+);
+
+-- Task Table 2
+CREATE TABLE GmtCountry (
+    id serial PRIMARY KEY,
+    name text NOT NULL,
+    alfa2 character(2),
+    alfa3 character(3),
+    phone text,
+    num text
+);
+
