@@ -1,7 +1,7 @@
 /*
-    // ----- // ----- // ----- // ----- // ----- // ----- //
-    SCRIPT FOR CREATE TABLE
-    // ----- // ----- // ----- // ----- // ----- // ----- //
+# // ----- // ----- // ----- // ----- // ----- // ----- // ----- //
+# Section 1 - Country, State, City, Neighborhood --> location
+# // ----- // ----- // ----- // ----- // ----- // ----- // ----- //
 */
 
 -- TABLA DE PAISES
@@ -14,13 +14,12 @@ CREATE TABLE GmtCountry (
     num text
 );
 
-
 -- TABLA DE ESTADOS
 CREATE TABLE GmtState (
     id SERIAL PRIMARY KEY,
     gmtcountry_id SERIAL NOT NULL,
     name TEXT NOT NULL,
-    FOREIGN KEY (GmtCountryid) REFERENCES GmtCountry(id)
+    FOREIGN KEY (gmtcountry_id) REFERENCES GmtCountry(id)
 );
 
 -- TABLA DE CIUDAD
@@ -34,17 +33,30 @@ CREATE TABLE GmtCity (
 -- TABLA DE BARRIOS
 CREATE TABLE GmtNeighborhood (
     id SERIAL PRIMARY KEY,
-    GmtCityid SMALLINT NOT NULL,
+    gmtcity_id SMALLINT NOT NULL,
     name TEXT NOT NULL,
-    FOREIGN KEY (GmtCityid) REFERENCES GmtCity(id)
+    FOREIGN KEY (gmtcity_id) REFERENCES GmtCity(id)
 );
+
+/*
+# // ----- // ----- // ----- // ----- // ----- // ----- // ----- //
+# Section 2 - Language --> Language
+# // ----- // ----- // ----- // ----- // ----- // ----- // ----- //
+*/
 
 -- TABLA DE LENGUAJES
 CREATE TABLE GmtLanguage (
     id SERIAL PRIMARY KEY,
     name TEXT NOT NULL,
-    alfa2 CHAR(2)
+    iso6391 CHAR(2),
+    iso6392 CHAR(3)
 );
+
+/*
+# // ----- // ----- // ----- // ----- // ----- // ----- // ----- //
+# Section 3 - GenderV01, GenderVX --> Genders
+# // ----- // ----- // ----- // ----- // ----- // ----- // ----- //
+*/
 
 -- TABLA DE GmtGenderV01
 CREATE TABLE GmtGenderV01 (
@@ -58,6 +70,22 @@ CREATE TABLE GmtGenderVX (
     id SERIAL PRIMARY KEY,
     name TEXT NOT NULL UNIQUE,
     idchar CHAR(1)
+);
+
+/*
+# // ----- // ----- // ----- // ----- // ----- // ----- // ----- //
+# Section 4 - HoliDay --> Days
+# // ----- // ----- // ----- // ----- // ----- // ----- // ----- //
+*/
+
+-- TABLA DE GmtHoliday
+CREATE TABLE GmtHoliday (
+    id SERIAL PRIMARY KEY,
+    gmtcountry_id SERIAL NOT NULL,
+    holiday DATE NOT NULL UNIQUE,
+    titleday TEXT,
+    descriptionday TEXT,
+    FOREIGN KEY (gmtcountry_id) REFERENCES GmtCountry(id)
 );
 
 /*
